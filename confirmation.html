@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src='script.js'></script>
+</head>
+<body>
+    <h1 class="titulo"> Página de confirmação </h1>
+
+    <button main id="data"></main>
+
+</body>
+
+<script>
+    // Função que faz download de objeto json
+    function downloadObjectAsjson(exportObj) {
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(exportObj);
+        var downloadAnchorNote = document.createElement('a');
+        downloadAnchorNote.setAttribute("href", dataStr);
+        downloadAnchorNote.setAttribute("download", "meuArquivo.json");
+        document.body.appendChild(downloadAnchorNote); // required for firefox
+        downloadAnchorNote.click();
+        downloadAnchorNote.remove();
+    }
+
+    // Obtem item salvo na memória local
+    const json = localStorage.getItem('form');
+
+    // Chama função para download de arquivo
+    downloadObjectAsjson(json)
+
+    const obj = JSON.parse(json);
+
+    for (key in obj) {
+        const markup = `
+        <div>
+            <span>${key} : ${obj[key]}</span>
+        </div>
+         `;
+        document.getElementById('data').innerHTML += markup;
+    }
+
+</script>
+
+</html>
